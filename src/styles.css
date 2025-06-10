@@ -275,6 +275,280 @@ header h1 {
     background: #5a67d8;
 }
 
+/* Task Content Styles */
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.task-expand-btn {
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.task-expand-btn:hover {
+    background: #5a67d8;
+}
+
+.task-detailed-content {
+    margin-top: 1rem;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.content-section {
+    padding: 1.5rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.content-section:last-child {
+    border-bottom: none;
+}
+
+.content-section h4 {
+    color: #1e293b;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.content-section h5 {
+    color: #475569;
+    margin-bottom: 0.75rem;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.content-section h6 {
+    color: #64748b;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+/* Objectives List */
+.objectives-list {
+    list-style: none;
+    padding: 0;
+}
+
+.objectives-list li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.objectives-list li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #10b981;
+    font-weight: bold;
+}
+
+/* Theory Content */
+.theory-content {
+    line-height: 1.6;
+}
+
+.theory-content h3 {
+    color: #1e293b;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 0.5rem;
+}
+
+.theory-content h4 {
+    color: #374151;
+    margin: 1.5rem 0 0.75rem 0;
+}
+
+.theory-content ul {
+    margin: 0.75rem 0;
+    padding-left: 1.5rem;
+}
+
+.theory-content pre {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 1rem;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+
+.theory-content code {
+    background: #f1f5f9;
+    padding: 0.125rem 0.25rem;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+}
+
+/* Lab Section */
+.lab-section {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border-left: 4px solid #0ea5e9;
+}
+
+.lab-setup {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: 6px;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+.lab-instructions {
+    margin: 1rem 0;
+}
+
+.lab-instructions ol {
+    padding-left: 1.5rem;
+}
+
+.lab-instructions li {
+    margin: 0.5rem 0;
+}
+
+/* Exercises */
+.exercise {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    border-left: 4px solid #10b981;
+}
+
+.exercise h6 {
+    color: #059669;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.exercise-task {
+    background: #ecfdf5;
+    border: 1px solid #10b981;
+    border-radius: 6px;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+.exercise-tasks ul,
+.exercise-questions ul {
+    margin: 0.5rem 0;
+    padding-left: 1.5rem;
+}
+
+.exercise-tasks li,
+.exercise-questions li {
+    margin: 0.25rem 0;
+}
+
+.exercise-commands {
+    margin: 1rem 0;
+}
+
+.exercise-commands pre {
+    background: #1f2937;
+    color: #f9fafb;
+    border-radius: 6px;
+    padding: 1rem;
+    overflow-x: auto;
+    font-family: 'Courier New', monospace;
+}
+
+.exercise-questions {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: 6px;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+.exercise-solution {
+    margin: 1rem 0;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+}
+
+.exercise-solution summary {
+    background: #f3f4f6;
+    padding: 0.75rem;
+    cursor: pointer;
+    border-radius: 6px 6px 0 0;
+    font-weight: 500;
+}
+
+.exercise-solution summary:hover {
+    background: #e5e7eb;
+}
+
+.exercise-solution pre {
+    margin: 0;
+    border-radius: 0 0 6px 6px;
+    background: #1f2937;
+    color: #f9fafb;
+}
+
+/* Resources */
+.resources-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.resource-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.resource-item:hover {
+    background: #f1f5f9;
+    border-color: #667eea;
+}
+
+.resource-item a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.resource-item a:hover {
+    color: #5a67d8;
+}
+
+.resource-type {
+    font-size: 0.8rem;
+    color: #64748b;
+    background: #e2e8f0;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+}
+
+/* Responsive adjustments for content */
 @media (max-width: 768px) {
     .container {
         grid-template-areas: 
@@ -291,5 +565,29 @@ header h1 {
     
     .tab-button {
         flex-basis: 50%;
+    }
+    
+    .task-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .task-expand-btn {
+        align-self: flex-end;
+    }
+    
+    .content-section {
+        padding: 1rem;
+    }
+    
+    .exercise {
+        padding: 1rem;
+    }
+    
+    .resource-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
     }
 }
