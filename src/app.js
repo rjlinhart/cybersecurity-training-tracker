@@ -239,13 +239,267 @@ ls -l               # View permissions
                                         }
                                     ]
                                 }
-                            },
-                            {
+                            },                            {
                                 id: "p1w1t3",
                                 title: "Python Functions and Loops",
                                 description: "Build 5 small Python programs using functions and loops",
                                 type: "coding",
-                                estimatedHours: 5
+                                estimatedHours: 5,
+                                content: {
+                                    objectives: [
+                                        "Create and use Python functions effectively",
+                                        "Implement different types of loops (for, while)",
+                                        "Build security-focused programs and utilities",
+                                        "Practice code organization and best practices",
+                                        "Develop problem-solving skills for cybersecurity"
+                                    ],
+                                    theory: `
+                                        <h3>Python Functions and Control Flow</h3>
+                                        <p>Functions and loops are fundamental building blocks for cybersecurity tools and automation scripts.</p>
+                                        
+                                        <h4>Functions in Python</h4>
+                                        <pre><code>
+def function_name(parameters):
+    """Function documentation"""
+    # Function body
+    return result
+
+# Example: Password strength checker
+def check_password_strength(password):
+    """Check if password meets security requirements"""
+    score = 0
+    if len(password) >= 8:
+        score += 1
+    if any(c.isupper() for c in password):
+        score += 1
+    if any(c.isdigit() for c in password):
+        score += 1
+    if any(c in "!@#$%^&*" for c in password):
+        score += 1
+    return score
+                                        </code></pre>
+                                        
+                                        <h4>Loops for Automation</h4>
+                                        <pre><code>
+# For loop - iterate over sequences
+for item in sequence:
+    process(item)
+
+# While loop - continue until condition is false
+while condition:
+    do_something()
+
+# Example: Port scanner concept
+for port in range(1, 1024):
+    if is_port_open(target, port):
+        print(f"Port {port} is open")
+                                        </code></pre>
+                                        
+                                        <h4>Security Programming Patterns</h4>
+                                        <ul>
+                                            <li><strong>Input Validation:</strong> Always validate user input</li>
+                                            <li><strong>Error Handling:</strong> Use try/except blocks</li>
+                                            <li><strong>Logging:</strong> Track program execution for security</li>
+                                            <li><strong>Modular Design:</strong> Break complex tasks into functions</li>
+                                        </ul>
+                                    `,
+                                    lab: {
+                                        title: "Security-Focused Python Programming Lab",
+                                        instructions: [
+                                            "Create a new Python file for each program",
+                                            "Test each function thoroughly",
+                                            "Add documentation and comments",
+                                            "Consider security implications of your code"
+                                        ],
+                                        exercises: [
+                                            {
+                                                title: "Program 1: Password Generator",
+                                                task: "Create a secure password generator with customizable options",
+                                                requirements: [
+                                                    "Function to generate random passwords",
+                                                    "Options for length, uppercase, numbers, symbols",
+                                                    "Ensure cryptographically secure randomness",
+                                                    "Test with different configurations"
+                                                ],
+                                                solution: `
+import random
+import string
+import secrets
+
+def generate_password(length=12, use_uppercase=True, use_numbers=True, use_symbols=True):
+    """Generate a cryptographically secure password"""
+    characters = string.ascii_lowercase
+    
+    if use_uppercase:
+        characters += string.ascii_uppercase
+    if use_numbers:
+        characters += string.digits
+    if use_symbols:
+        characters += "!@#$%^&*"
+    
+    # Use secrets for cryptographic security
+    password = ''.join(secrets.choice(characters) for _ in range(length))
+    return password
+
+def test_password_generator():
+    """Test the password generator with different settings"""
+    print("Testing Password Generator:")
+    print(f"Simple: {generate_password(8, False, False, False)}")
+    print(f"Complex: {generate_password(16, True, True, True)}")
+    print(f"Numbers only: {generate_password(10, False, True, False)}")
+
+# Run tests
+test_password_generator()
+                                                `
+                                            },
+                                            {
+                                                title: "Program 2: Log File Analyzer",
+                                                task: "Create a program to analyze security logs and detect suspicious patterns",
+                                                requirements: [
+                                                    "Function to read and parse log files",
+                                                    "Detect failed login attempts",
+                                                    "Count unique IP addresses",
+                                                    "Report suspicious activity patterns"
+                                                ],
+                                                solution: `
+import re
+from collections import Counter
+
+def analyze_log_file(filename):
+    """Analyze security logs for suspicious activity"""
+    failed_logins = []
+    ip_addresses = []
+    
+    try:
+        with open(filename, 'r') as file:
+            for line in file:
+                # Look for failed login patterns
+                if "FAILED" in line.upper() or "INVALID" in line.upper():
+                    failed_logins.append(line.strip())
+                
+                # Extract IP addresses (simple regex)
+                ip_match = re.search(r'(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})', line)
+                if ip_match:
+                    ip_addresses.append(ip_match.group(1))
+    
+    except FileNotFoundError:
+        print(f"Log file {filename} not found")
+        return
+    
+    # Analysis
+    print(f"Total failed logins: {len(failed_logins)}")
+    print(f"Unique IP addresses: {len(set(ip_addresses))}")
+    
+    # Top suspicious IPs
+    ip_counts = Counter(ip_addresses)
+    print("Top 5 most active IPs:")
+    for ip, count in ip_counts.most_common(5):
+        print(f"  {ip}: {count} requests")
+
+# Create sample log file for testing
+def create_sample_log():
+    """Create a sample log file for testing"""
+    sample_logs = [
+        "2025-06-10 10:15:32 LOGIN 192.168.1.100 user1 SUCCESS",
+        "2025-06-10 10:16:45 LOGIN 192.168.1.200 user2 FAILED",
+        "2025-06-10 10:17:12 LOGIN 192.168.1.200 admin FAILED",
+        "2025-06-10 10:18:33 LOGIN 192.168.1.100 user1 SUCCESS",
+        "2025-06-10 10:19:44 LOGIN 10.0.0.50 root FAILED",
+    ]
+    
+    with open('sample_security.log', 'w') as file:
+        for log in sample_logs:
+            file.write(log + '\n')
+
+# Run analysis
+create_sample_log()
+analyze_log_file('sample_security.log')
+                                                `
+                                            },
+                                            {
+                                                title: "Program 3: Network Port Checker",
+                                                task: "Build a simple port connectivity checker for security assessments",
+                                                requirements: [
+                                                    "Function to check if a port is open on a host",
+                                                    "Scan multiple common ports",
+                                                    "Handle timeouts and errors gracefully",
+                                                    "Report results in a clear format"
+                                                ],
+                                                solution: `
+import socket
+import sys
+from datetime import datetime
+
+def check_port(host, port, timeout=3):
+    """Check if a specific port is open on a host"""
+    try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(timeout)
+        result = sock.connect_ex((host, port))
+        sock.close()
+        return result == 0  # 0 means connection successful
+    except socket.gaierror:
+        return False
+
+def scan_common_ports(host):
+    """Scan common ports on a target host"""
+    common_ports = {
+        21: "FTP",
+        22: "SSH", 
+        23: "Telnet",
+        25: "SMTP",
+        53: "DNS",
+        80: "HTTP",
+        110: "POP3",
+        143: "IMAP",
+        443: "HTTPS",
+        993: "IMAPS",
+        995: "POP3S"
+    }
+    
+    print(f"Scanning {host} for open ports...")
+    print(f"Started at: {datetime.now()}")
+    print("-" * 50)
+    
+    open_ports = []
+    
+    for port, service in common_ports.items():
+        if check_port(host, port):
+            print(f"Port {port:5d} ({service:8s}) - OPEN")
+            open_ports.append((port, service))
+        else:
+            print(f"Port {port:5d} ({service:8s}) - CLOSED")
+    
+    print("-" * 50)
+    print(f"Scan completed. Found {len(open_ports)} open ports.")
+    return open_ports
+
+# Example usage (scan localhost)
+if __name__ == "__main__":
+    target = "127.0.0.1"  # localhost
+    scan_common_ports(target)
+                                                `
+                                            }
+                                        ]
+                                    },
+                                    resources: [
+                                        {
+                                            title: "Python Functions Documentation",
+                                            url: "https://docs.python.org/3/tutorial/controlflow.html#defining-functions",
+                                            type: "documentation"
+                                        },
+                                        {
+                                            title: "Python Security Best Practices",
+                                            url: "https://python.org/dev/security/",
+                                            type: "security"
+                                        },
+                                        {
+                                            title: "Automate the Boring Stuff with Python",
+                                            url: "https://automatetheboringstuff.com/",
+                                            type: "tutorial"
+                                        }
+                                    ]
+                                }
                             },
                             {
                                 id: "p1w1t4",
