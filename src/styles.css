@@ -43,6 +43,11 @@ header h1 {
 
 .user-info {
     text-align: right;
+    min-width: 250px;
+}
+
+.user-info .overall-progress {
+    margin: 0.5rem 0;
 }
 
 .overall-progress {
@@ -260,7 +265,6 @@ header h1 {
 }
 
 .notes-widget button {
-    margin-top: 0.5rem;
     padding: 0.5rem 1rem;
     background: #667eea;
     color: white;
@@ -273,6 +277,17 @@ header h1 {
 
 .notes-widget button:hover {
     background: #5a67d8;
+}
+
+/* Notes Actions */
+.notes-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.notes-actions button {
+    flex: 1;
 }
 
 /* Task Content Styles */
@@ -996,6 +1011,103 @@ header h1 {
         transform: translateX(0);
         opacity: 1;
     }
+}
+
+/* Database Connection Status */
+.connection-status {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+}
+
+.status-indicator {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.status-indicator.online {
+    background: rgba(16, 185, 129, 0.2);
+    color: #065f46;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.status-indicator.offline {
+    background: rgba(251, 191, 36, 0.2);
+    color: #92400e;
+    border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+/* Save Status Notifications */
+.save-status {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    z-index: 1001;
+    animation: slideInRight 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.save-status.database {
+    background: #10b981;
+    color: white;
+}
+
+.save-status.local {
+    background: #f59e0b;
+    color: white;
+}
+
+.save-status.error {
+    background: #ef4444;
+    color: white;
+}
+
+.save-status.offline {
+    background: #6b7280;
+    color: white;
+}
+
+/* Sync Button */
+.sync-button {
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin-top: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.sync-button:hover {
+    background: #5a67d8;
+}
+
+.sync-button:disabled {
+    background: #9ca3af;
+    cursor: not-allowed;
+}
+
+.sync-button.syncing {
+    opacity: 0.7;
+}
+
+.sync-button.syncing i {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 /* Responsive Design for Setup Guides */

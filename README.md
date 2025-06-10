@@ -8,12 +8,22 @@ This application provides a structured 6-month cybersecurity curriculum with int
 
 ## 🚀 Features
 
+### 🎯 Core Learning Features
 - **📊 Progress Tracking**: Visual progress bars and completion statistics
 - **🏆 Achievement System**: Unlockable badges and milestones
 - **📱 Responsive Design**: Works on desktop, tablet, and mobile devices
-- **💾 Local Storage**: Automatic progress saving in browser
 - **📝 Note Taking**: Built-in quick notes functionality
 - **🎯 Gamification**: Streaks, time tracking, and performance metrics
+
+### 💾 Storage Options
+- **🌐 Database Mode**: Full-featured with analytics and multi-device sync
+- **📱 Simple Mode**: Browser localStorage for offline-only usage
+
+### 🔄 Advanced Features (Database Mode)
+- **Real-time Sync**: Progress saved to database with offline fallback
+- **📈 Analytics**: Daily progress charts and learning insights
+- **🔄 Multi-device**: Access from any device with automatic sync
+- **📊 Detailed Tracking**: Time investment and learning patterns
 
 ## 📚 Curriculum Structure
 
@@ -35,21 +45,58 @@ This application provides a structured 6-month cybersecurity curriculum with int
 
 ## 🛠️ Installation
 
-### Quick Start (Any OS)
-1. **Clone the repository**:
+### Option 1: 🌐 Database Mode (Recommended)
+Enhanced features with persistent storage and analytics
+
+**Windows:**
+```powershell
+# Clone and setup
+git clone https://github.com/rjlinhart/cybersec-training-tracker.git
+cd cybersec-training-tracker
+
+# Run the startup script
+.\start-database.ps1
+```
+
+**macOS/Linux:**
+```bash
+# Clone and setup
+git clone https://github.com/rjlinhart/cybersec-training-tracker.git
+cd cybersec-training-tracker
+
+# Install dependencies and start
+cd server
+npm install
+node scripts/migrate.js
+npm start
+```
+
+**Then visit**: http://localhost:3000
+
+### Option 2: 📱 Simple Mode
+Basic functionality with browser storage only
+
+**Windows:**
+```powershell
+# Clone and start
+git clone https://github.com/rjlinhart/cybersec-training-tracker.git
+cd cybersec-training-tracker
+
+# Run simple mode
+.\start-simple.ps1
+```
+
+**Any OS:**
 ```bash
 git clone https://github.com/rjlinhart/cybersec-training-tracker.git
 cd cybersec-training-tracker
-```
 
-2. **Start the application**:
-```bash
-# Using Python (recommended)
+# Start simple HTTP server
 python -m http.server 8000        # Windows/Linux
 python3 -m http.server 8000       # macOS
-
-# Then visit http://localhost:8000
 ```
+
+**Then visit**: http://localhost:8000
 
 ### Platform-Specific Setup Guides
 

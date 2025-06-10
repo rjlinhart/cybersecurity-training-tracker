@@ -1,8 +1,10 @@
 class CyberSecTracker {
     constructor() {
         this.curriculum = this.initializeCurriculum();
-        this.progress = this.loadProgress();
+        this.db = new DatabaseService();
+        this.progress = { completedTasks: [], totalHours: 0, streak: 0, lastActivity: null };
         this.achievements = this.initializeAchievements();
+        this.isOnlineMode = false;
         this.init();
     }
 
@@ -1100,13 +1102,25 @@ nmap -A target              # Aggressive scan (OS, services, scripts)
             { id: 'streak_7', title: 'Consistent Learner', description: '7-day learning streak', icon: '🔥', unlocked: false },
             { id: 'all_complete', title: 'Cybersec Master', description: 'Complete entire curriculum', icon: '👑', unlocked: false }
         ];
-    }    init() {
+    }    async init() {
+        // Setup database connection status monitoring
+        this.db.onlineStatusChanged((online) => {
+            this.isOnlineMode = online;
+            this.updateConnectionStatus();
+        });
+
+        // Load progress from database or localStorage
+        await this.loadProgress();
+        
         this.renderCurriculum();
         this.renderSetupGuides();
         this.updateStats();
         this.updateAchievements();
         this.setupEventListeners();
-        this.loadNotes();
+        await this.loadNotes();
+        
+        // Add connection status indicator
+        this.addConnectionStatusIndicator();
     }
 
     setupEventListeners() {
@@ -1393,9 +1407,8 @@ nmap -A target              # Aggressive scan (OS, services, scripts)
         const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
         
         return { completed, total, percentage };
-    }
-
-    toggleTask(taskId, isCompleted) {
+    }    async toggleTask(taskId, isCompleted) {
+        // Update local state immediately for responsive UI
         if (isCompleted) {
             if (!this.progress.completedTasks.includes(taskId)) {
                 this.progress.completedTasks.push(taskId);
@@ -1420,10 +1433,19 @@ nmap -A target              # Aggressive scan (OS, services, scripts)
             }
         }
         
-        this.saveProgress();
+        // Save to database/localStorage
+        const task = this.findTaskById(taskId);
+        const timeSpent = task ? task.estimatedHours * 60 : 60; // Convert to minutes
+        
+        const result = await this.db.saveTaskProgress(taskId, isCompleted, timeSpent);
+        
+        // Update UI
         this.updateStats();
         this.updateAchievements();
         this.renderCurriculum();
+        
+        // Show save status
+        this.showSaveStatus(result);
     }
 
     findTaskById(taskId) {
@@ -1493,31 +1515,50 @@ nmap -A target              # Aggressive scan (OS, services, scripts)
                 </div>
             </div>
         `).join('');
+    }    async saveProgress() {
+        // This method is now mainly for compatibility
+        // Actual saving is handled in toggleTask through DatabaseService
+        return await this.db.getProgress();
     }
 
-    saveProgress() {
-        localStorage.setItem('cyberSecProgress', JSON.stringify(this.progress));
+    async loadProgress() {
+        try {
+            const progressData = await this.db.getProgress();
+            this.progress = {
+                completedTasks: progressData.completedTasks || [],
+                totalHours: progressData.totalHours || 0,
+                streak: progressData.streak || 0,
+                lastActivity: progressData.lastActivity || null
+            };
+            this.isOnlineMode = await this.db.checkConnectionStatus();
+        } catch (error) {
+            console.warn('Failed to load progress:', error);
+            // Fallback to localStorage
+            const saved = localStorage.getItem('cyberSecProgress');
+            this.progress = saved ? JSON.parse(saved) : {
+                completedTasks: [],
+                totalHours: 0,
+                streak: 0,
+                lastActivity: null
+            };
+        }
     }
 
-    loadProgress() {
-        const saved = localStorage.getItem('cyberSecProgress');
-        return saved ? JSON.parse(saved) : {
-            completedTasks: [],
-            totalHours: 0,
-            streak: 0,
-            lastActivity: null
-        };
-    }
-
-    saveNotes() {
+    async saveNotes() {
         const notes = document.getElementById('quick-notes').value;
-        localStorage.setItem('quickNotes', notes);
+        const result = await this.db.saveNotes(notes);
+        this.showSaveStatus(result);
     }
 
-    loadNotes() {
-        const saved = localStorage.getItem('quickNotes');
-        if (saved) {
-            document.getElementById('quick-notes').value = saved;
+    async loadNotes() {
+        try {
+            const notesData = await this.db.getNotes();
+            const notesElement = document.getElementById('quick-notes');
+            if (notesElement && notesData.content) {
+                notesElement.value = notesData.content;
+            }
+        } catch (error) {
+            console.warn('Failed to load notes:', error);
         }
     }
 
@@ -2020,6 +2061,84 @@ nmap -A target              # Aggressive scan (OS, services, scripts)
                 </div>
             </div>
         `;
+    }
+
+    // Database connection and status methods
+    addConnectionStatusIndicator() {
+        const header = document.querySelector('header .user-info');
+        if (header) {
+            const statusDiv = document.createElement('div');
+            statusDiv.id = 'connection-status';
+            statusDiv.className = 'connection-status';
+            header.appendChild(statusDiv);
+            this.updateConnectionStatus();
+        }
+    }
+
+    updateConnectionStatus() {
+        const statusElement = document.getElementById('connection-status');
+        if (statusElement) {
+            const status = this.db.getConnectionStatus();
+            statusElement.innerHTML = `
+                <span class="status-indicator ${status.online ? 'online' : 'offline'}">
+                    ${status.message}
+                </span>
+            `;
+        }
+    }
+
+    showSaveStatus(result) {
+        const statusElement = document.getElementById('save-status');
+        if (statusElement) {
+            statusElement.remove();
+        }
+
+        const status = document.createElement('div');
+        status.id = 'save-status';
+        status.className = `save-status ${result.source}`;
+        
+        let message = result.success ? '✅ Saved' : '❌ Save failed';
+        if (result.source === 'local') {
+            message += ' (offline)';
+        } else if (result.source === 'database') {
+            message += ' (synced)';
+        }
+
+        status.textContent = message;
+        document.body.appendChild(status);
+
+        // Auto-remove after 3 seconds
+        setTimeout(() => {
+            if (status.parentNode) {
+                status.parentNode.removeChild(status);
+            }
+        }, 3000);
+    }
+
+    // Sync data between local and database
+    async syncData() {
+        if (!this.isOnlineMode) {
+            this.showSaveStatus({ success: false, source: 'offline', message: 'Cannot sync while offline' });
+            return;
+        }
+
+        try {
+            const result = await this.db.syncData();
+            this.showSaveStatus({ 
+                success: result.success, 
+                source: 'database', 
+                message: result.success ? 'Data synced successfully' : 'Sync failed' 
+            });
+            
+            if (result.success) {
+                await this.loadProgress();
+                this.updateStats();
+                this.updateAchievements();
+                this.renderCurriculum();
+            }
+        } catch (error) {
+            this.showSaveStatus({ success: false, source: 'error', message: 'Sync error: ' + error.message });
+        }
     }
 }
 
