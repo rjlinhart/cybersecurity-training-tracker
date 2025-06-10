@@ -1,0 +1,49 @@
+{
+  "name": "cybersec-training-tracker",
+  "version": "1.0.0",
+  "description": "A comprehensive web-based progress tracking application for cybersecurity learning and penetration testing training",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "dev": "live-server --port=8080",
+    "build": "npm run minify-css && npm run minify-js",
+    "minify-css": "cleancss -o dist/styles.min.css src/styles.css",
+    "minify-js": "uglifyjs src/app.js -o dist/app.min.js -c -m",
+    "test": "echo \"No tests specified\" && exit 0",
+    "lint": "eslint src/**/*.js",
+    "format": "prettier --write src/**/*.{js,css,html}"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/cybersec-training-tracker.git"
+  },
+  "keywords": [
+    "cybersecurity",
+    "education",
+    "penetration-testing",
+    "training",
+    "progress-tracker",
+    "learning",
+    "security",
+    "hacking",
+    "curriculum"
+  ],
+  "author": "Your Name <your.email@example.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yourusername/cybersec-training-tracker/issues"
+  },
+  "homepage": "https://github.com/yourusername/cybersec-training-tracker#readme",
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "prettier": "^2.5.0",
+    "clean-css-cli": "^5.4.0",
+    "uglify-js": "^3.14.0",
+    "live-server": "^1.2.1"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
