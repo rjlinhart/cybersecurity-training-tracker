@@ -35,18 +35,70 @@ This application provides a structured 6-month cybersecurity curriculum with int
 
 ## 🛠️ Installation
 
+### Quick Start (Any OS)
 1. **Clone the repository**:
-```powershell
-git clone https://github.com/yourusername/cybersec-training-tracker.git
+```bash
+git clone https://github.com/rjlinhart/cybersec-training-tracker.git
 cd cybersec-training-tracker
 ```
 
-2. **Open in browser**:
+2. **Start the application**:
+```bash
+# Using Python (recommended)
+python -m http.server 8000        # Windows/Linux
+python3 -m http.server 8000       # macOS
+
+# Then visit http://localhost:8000
+```
+
+### Platform-Specific Setup Guides
+
+#### 🍎 macOS Users
+**Option 1: Quick Setup Script**
+```bash
+# Clone repository
+git clone https://github.com/rjlinhart/cybersec-training-tracker.git
+cd cybersec-training-tracker
+
+# Run automated setup script
+chmod +x setup-macos.sh
+./setup-macos.sh
+```
+
+**Option 2: Manual Setup**
+For complete VS Code setup and configuration, see: **[macOS Setup Guide](docs/MACOS_SETUP.md)**
+- VS Code installation and configuration
+- Homebrew and development tools setup
+- Step-by-step terminal instructions
+- Troubleshooting for Mac-specific issues
+
+#### 🪟 Windows Users
+**Option 1: Quick Setup Script**
 ```powershell
-# Open index.html directly in your browser
-# OR use a local server (recommended)
+# Clone repository
+git clone https://github.com/rjlinhart/cybersec-training-tracker.git
+cd cybersec-training-tracker
+
+# Run automated setup script
+.\setup-windows.ps1
+```
+
+**Option 2: Manual Setup**
+```powershell
+# Manual installation
 python -m http.server 8000
 # Then visit http://localhost:8000
+```
+
+#### 🐧 Linux Users
+```bash
+# Install git if needed
+sudo apt update && sudo apt install git python3
+
+# Clone and run
+git clone https://github.com/rjlinhart/cybersec-training-tracker.git
+cd cybersec-training-tracker
+python3 -m http.server 8000
 ```
 
 ## 💻 Technology Stack
