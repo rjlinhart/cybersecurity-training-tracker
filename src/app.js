@@ -391,7 +391,7 @@ def analyze_log_file(filename):
     print(f"Unique IP addresses: {len(set(ip_addresses))}")
     
     # Top suspicious IPs
-    ip_counts = Counter(ip_addresses)
+    ip_counts = Counter(ip_addresses);
     print("Top 5 most active IPs:")
     for ip, count in ip_counts.most_common(5):
         print(f"  {ip}: {count} requests")
@@ -459,7 +459,7 @@ def scan_common_ports(host):
     
     print(f"Scanning {host} for open ports...")
     print(f"Started at: {datetime.now()}")
-    print("-" * 50)
+    console.log("-" * 50)
     
     open_ports = []
     
@@ -1100,10 +1100,9 @@ nmap -A target              # Aggressive scan (OS, services, scripts)
             { id: 'streak_7', title: 'Consistent Learner', description: '7-day learning streak', icon: '🔥', unlocked: false },
             { id: 'all_complete', title: 'Cybersec Master', description: 'Complete entire curriculum', icon: '👑', unlocked: false }
         ];
-    }
-
-    init() {
+    }    init() {
         this.renderCurriculum();
+        this.renderSetupGuides();
         this.updateStats();
         this.updateAchievements();
         this.setupEventListeners();
@@ -1520,6 +1519,507 @@ nmap -A target              # Aggressive scan (OS, services, scripts)
         if (saved) {
             document.getElementById('quick-notes').value = saved;
         }
+    }
+
+    renderSetupGuides() {
+        const setupElement = document.getElementById('phase-setup');
+        if (!setupElement) return;
+
+        const setupHTML = `
+            <div class="setup-guides-container">
+                <div class="setup-header">
+                    <h2><i class="fas fa-rocket"></i> Setup Guides</h2>
+                    <p class="setup-subtitle">Get started with the Cybersecurity Training Tracker on your platform</p>
+                </div>
+
+                <div class="setup-grid">
+                    <div class="setup-card macos-setup">
+                        <div class="setup-card-header">
+                            <i class="fab fa-apple"></i>
+                            <h3>macOS Setup</h3>
+                        </div>
+                        <div class="setup-card-content">
+                            <p>Complete setup guide for macOS users with VS Code integration</p>
+                            <ul class="setup-features">
+                                <li><i class="fas fa-check"></i> Homebrew installation</li>
+                                <li><i class="fas fa-check"></i> VS Code configuration</li>
+                                <li><i class="fas fa-check"></i> Development tools setup</li>
+                                <li><i class="fas fa-check"></i> Automated script included</li>
+                            </ul>
+                            <div class="setup-buttons">
+                                <button class="setup-btn primary" onclick="app.showSetupContent('macos')">
+                                    <i class="fas fa-book-open"></i> View Guide
+                                </button>
+                                <button class="setup-btn secondary" onclick="app.downloadScript('macos')">
+                                    <i class="fas fa-download"></i> Download Script
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="setup-card windows-setup">
+                        <div class="setup-card-header">
+                            <i class="fab fa-windows"></i>
+                            <h3>Windows Setup</h3>
+                        </div>
+                        <div class="setup-card-content">
+                            <p>PowerShell-based setup guide for Windows users</p>
+                            <ul class="setup-features">
+                                <li><i class="fas fa-check"></i> PowerShell automation</li>
+                                <li><i class="fas fa-check"></i> Git and Python setup</li>
+                                <li><i class="fas fa-check"></i> VS Code integration</li>
+                                <li><i class="fas fa-check"></i> Troubleshooting guide</li>
+                            </ul>
+                            <div class="setup-buttons">
+                                <button class="setup-btn primary" onclick="app.showSetupContent('windows')">
+                                    <i class="fas fa-book-open"></i> View Guide
+                                </button>
+                                <button class="setup-btn secondary" onclick="app.downloadScript('windows')">
+                                    <i class="fas fa-download"></i> Download Script
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="setup-card linux-setup">
+                        <div class="setup-card-header">
+                            <i class="fab fa-linux"></i>
+                            <h3>Linux Setup</h3>
+                        </div>
+                        <div class="setup-card-content">
+                            <p>Terminal-based setup for Linux distributions</p>
+                            <ul class="setup-features">
+                                <li><i class="fas fa-check"></i> Package manager commands</li>
+                                <li><i class="fas fa-check"></i> Git and Python3 setup</li>
+                                <li><i class="fas fa-check"></i> Development environment</li>
+                                <li><i class="fas fa-check"></i> Cross-distribution support</li>
+                            </ul>
+                            <div class="setup-buttons">
+                                <button class="setup-btn primary" onclick="app.showSetupContent('linux')">
+                                    <i class="fas fa-book-open"></i> View Guide
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="setup-card quick-start">
+                        <div class="setup-card-header">
+                            <i class="fas fa-rocket"></i>
+                            <h3>Quick Start</h3>
+                        </div>
+                        <div class="setup-card-content">
+                            <p>Already have the prerequisites? Get started immediately</p>
+                            <div class="quick-commands">
+                                <div class="command-block">
+                                    <label>Clone Repository:</label>
+                                    <code>git clone https://github.com/rjlinhart/cybersec-training-tracker.git</code>
+                                    <button class="copy-btn" onclick="app.copyToClipboard('git clone https://github.com/rjlinhart/cybersec-training-tracker.git')">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                </div>
+                                <div class="command-block">
+                                    <label>Start Server:</label>
+                                    <code>python3 -m http.server 8000</code>
+                                    <button class="copy-btn" onclick="app.copyToClipboard('python3 -m http.server 8000')">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                </div>
+                                <div class="command-block">
+                                    <label>Open Browser:</label>
+                                    <code>http://localhost:8000</code>
+                                    <button class="copy-btn" onclick="app.copyToClipboard('http://localhost:8000')">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setup-help-section">
+                    <h3><i class="fas fa-life-ring"></i> Need Help?</h3>
+                    <div class="help-grid">
+                        <div class="help-item">
+                            <i class="fas fa-bug"></i>
+                            <h4>Troubleshooting</h4>
+                            <p>Common issues and their solutions</p>
+                            <a href="#" onclick="app.showTroubleshooting()">View Solutions</a>
+                        </div>
+                        <div class="help-item">
+                            <i class="fas fa-question-circle"></i>
+                            <h4>FAQ</h4>
+                            <p>Frequently asked questions</p>
+                            <a href="#" onclick="app.showFAQ()">View FAQ</a>
+                        </div>
+                        <div class="help-item">
+                            <i class="fab fa-github"></i>
+                            <h4>GitHub Issues</h4>
+                            <p>Report bugs or request features</p>
+                            <a href="https://github.com/rjlinhart/cybersec-training-tracker/issues" target="_blank">Open Issue</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Setup content modals will be inserted here -->
+                <div id="setup-modal" class="setup-modal" style="display: none;">
+                    <div class="setup-modal-content">
+                        <div class="setup-modal-header">
+                            <h3 id="setup-modal-title">Setup Guide</h3>
+                            <button class="setup-modal-close" onclick="app.closeSetupModal()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="setup-modal-body" id="setup-modal-body">
+                            <!-- Content will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        setupElement.innerHTML = setupHTML;
+    }
+
+    showSetupContent(platform) {
+        const modal = document.getElementById('setup-modal');
+        const title = document.getElementById('setup-modal-title');
+        const body = document.getElementById('setup-modal-body');
+        
+        let content = '';
+        
+        switch(platform) {
+            case 'macos':
+                title.textContent = '🍎 macOS Setup Guide';
+                content = this.getMacOSSetupContent();
+                break;
+            case 'windows':
+                title.textContent = '🪟 Windows Setup Guide';
+                content = this.getWindowsSetupContent();
+                break;
+            case 'linux':
+                title.textContent = '🐧 Linux Setup Guide';
+                content = this.getLinuxSetupContent();
+                break;
+        }
+        
+        body.innerHTML = content;
+        modal.style.display = 'flex';
+    }
+
+    getMacOSSetupContent() {
+        return `
+            <div class="setup-guide-content">
+                <h4>📋 Prerequisites</h4>
+                <ul>
+                    <li>macOS 10.14 (Mojave) or later</li>
+                    <li>At least 4GB of RAM</li>
+                    <li>2GB of free disk space</li>
+                    <li>Internet connection</li>
+                </ul>
+
+                <h4>🛠️ Step 1: Install Required Software</h4>
+                <div class="step-content">
+                    <h5>Install Homebrew (Package Manager)</h5>
+                    <div class="command-block">
+                        <code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</code>
+                        <button class="copy-btn" onclick="app.copyToClipboard('/bin/bash -c \\"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\\"')">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+
+                    <h5>Install Git, Python 3, and Node.js</h5>
+                    <div class="command-block">
+                        <code>brew install git python3 node</code>
+                        <button class="copy-btn" onclick="app.copyToClipboard('brew install git python3 node')">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+
+                    <h5>Install Visual Studio Code</h5>
+                    <ol>
+                        <li>Download VS Code from <a href="https://code.visualstudio.com/" target="_blank">https://code.visualstudio.com/</a></li>
+                        <li>Extract the .zip file to Applications folder</li>
+                        <li>Open VS Code, press <kbd>Cmd+Shift+P</kbd>, type "shell command", and select "Install 'code' command in PATH"</li>
+                    </ol>
+                </div>
+
+                <h4>📁 Step 2: Clone the Repository</h4>
+                <div class="command-block">
+                    <code>git clone https://github.com/rjlinhart/cybersec-training-tracker.git<br>cd cybersec-training-tracker</code>
+                    <button class="copy-btn" onclick="app.copyToClipboard('git clone https://github.com/rjlinhart/cybersec-training-tracker.git\\ncd cybersec-training-tracker')">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+
+                <h4>🚀 Step 3: Start the Application</h4>
+                <div class="command-block">
+                    <code>python3 -m http.server 8000</code>
+                    <button class="copy-btn" onclick="app.copyToClipboard('python3 -m http.server 8000')">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+                <p>Then open your browser and go to <a href="http://localhost:8000" target="_blank">http://localhost:8000</a></p>
+
+                <div class="setup-tip">
+                    <i class="fas fa-lightbulb"></i>
+                    <strong>Tip:</strong> For the complete detailed guide with VS Code setup, see <code>docs/MACOS_SETUP.md</code> in the project folder.
+                </div>
+            </div>
+        `;
+    }
+
+    getWindowsSetupContent() {
+        return `
+            <div class="setup-guide-content">
+                <h4>📋 Prerequisites</h4>
+                <ul>
+                    <li>Windows 10 or later</li>
+                    <li>At least 4GB of RAM</li>
+                    <li>2GB of free disk space</li>
+                    <li>Internet connection</li>
+                </ul>
+
+                <h4>🛠️ Step 1: Install Required Software</h4>
+                <div class="step-content">
+                    <h5>Install Git for Windows</h5>
+                    <ol>
+                        <li>Download from <a href="https://git-scm.com/download/win" target="_blank">https://git-scm.com/download/win</a></li>
+                        <li>Run the installer with default settings</li>
+                        <li>Restart PowerShell after installation</li>
+                    </ol>
+
+                    <h5>Install Python 3</h5>
+                    <ol>
+                        <li>Download from <a href="https://www.python.org/downloads/" target="_blank">https://www.python.org/downloads/</a></li>
+                        <li>During installation, check "Add Python to PATH"</li>
+                        <li>Restart PowerShell after installation</li>
+                    </ol>
+
+                    <h5>Install Visual Studio Code (Optional)</h5>
+                    <ol>
+                        <li>Download from <a href="https://code.visualstudio.com/" target="_blank">https://code.visualstudio.com/</a></li>
+                        <li>During installation, check "Add to PATH"</li>
+                    </ol>
+                </div>
+
+                <h4>📁 Step 2: Clone the Repository</h4>
+                <div class="command-block">
+                    <code>git clone https://github.com/rjlinhart/cybersec-training-tracker.git<br>cd cybersec-training-tracker</code>
+                    <button class="copy-btn" onclick="app.copyToClipboard('git clone https://github.com/rjlinhart/cybersec-training-tracker.git\\ncd cybersec-training-tracker')">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+
+                <h4>🚀 Step 3: Start the Application</h4>
+                <div class="command-block">
+                    <code>python -m http.server 8000</code>
+                    <button class="copy-btn" onclick="app.copyToClipboard('python -m http.server 8000')">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+                <p>Then open your browser and go to <a href="http://localhost:8000" target="_blank">http://localhost:8000</a></p>
+
+                <div class="setup-tip">
+                    <i class="fas fa-lightbulb"></i>
+                    <strong>Tip:</strong> Use the automated setup script by running <code>.\\setup-windows.ps1</code> in the project folder.
+                </div>
+            </div>
+        `;
+    }
+
+    getLinuxSetupContent() {
+        return `
+            <div class="setup-guide-content">
+                <h4>📋 Prerequisites</h4>
+                <ul>
+                    <li>Any modern Linux distribution</li>
+                    <li>At least 4GB of RAM</li>
+                    <li>2GB of free disk space</li>
+                    <li>Internet connection</li>
+                </ul>
+
+                <h4>🛠️ Step 1: Install Required Software</h4>
+                <div class="step-content">
+                    <h5>Ubuntu/Debian:</h5>
+                    <div class="command-block">
+                        <code>sudo apt update && sudo apt install git python3 python3-pip nodejs npm</code>
+                        <button class="copy-btn" onclick="app.copyToClipboard('sudo apt update && sudo apt install git python3 python3-pip nodejs npm')">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+
+                    <h5>CentOS/RHEL/Fedora:</h5>
+                    <div class="command-block">
+                        <code>sudo dnf install git python3 python3-pip nodejs npm</code>
+                        <button class="copy-btn" onclick="app.copyToClipboard('sudo dnf install git python3 python3-pip nodejs npm')">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+
+                    <h5>Arch Linux:</h5>
+                    <div class="command-block">
+                        <code>sudo pacman -S git python nodejs npm</code>
+                        <button class="copy-btn" onclick="app.copyToClipboard('sudo pacman -S git python nodejs npm')">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <h4>📁 Step 2: Clone the Repository</h4>
+                <div class="command-block">
+                    <code>git clone https://github.com/rjlinhart/cybersec-training-tracker.git<br>cd cybersec-training-tracker</code>
+                    <button class="copy-btn" onclick="app.copyToClipboard('git clone https://github.com/rjlinhart/cybersec-training-tracker.git\\ncd cybersec-training-tracker')">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+
+                <h4>🚀 Step 3: Start the Application</h4>
+                <div class="command-block">
+                    <code>python3 -m http.server 8000</code>
+                    <button class="copy-btn" onclick="app.copyToClipboard('python3 -m http.server 8000')">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+                <p>Then open your browser and go to <a href="http://localhost:8000" target="_blank">http://localhost:8000</a></p>
+
+                <div class="setup-tip">
+                    <i class="fas fa-lightbulb"></i>
+                    <strong>Tip:</strong> For VS Code installation, download the .deb or .rpm package from <a href="https://code.visualstudio.com/" target="_blank">code.visualstudio.com</a>
+                </div>
+            </div>
+        `;
+    }
+
+    downloadScript(platform) {
+        if (platform === 'macos') {
+            const link = document.createElement('a');
+            link.href = 'setup-macos.sh';
+            link.download = 'setup-macos.sh';
+            link.click();
+        } else if (platform === 'windows') {
+            const link = document.createElement('a');
+            link.href = 'setup-windows.ps1';
+            link.download = 'setup-windows.ps1';
+            link.click();
+        }
+    }
+
+    copyToClipboard(text) {
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(text).then(() => {
+                this.showCopySuccess();
+            });
+        } else {
+            // Fallback for older browsers
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            this.showCopySuccess();
+        }
+    }
+
+    showCopySuccess() {
+        const toast = document.createElement('div');
+        toast.className = 'copy-toast';
+        toast.innerHTML = '<i class="fas fa-check"></i> Copied to clipboard!';
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.classList.add('show');
+        }, 100);
+        
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => document.body.removeChild(toast), 300);
+        }, 2000);
+    }
+
+    closeSetupModal() {
+        document.getElementById('setup-modal').style.display = 'none';
+    }
+
+    showTroubleshooting() {
+        this.showSetupContent('troubleshooting');
+        document.getElementById('setup-modal-title').textContent = '🔧 Troubleshooting';
+        document.getElementById('setup-modal-body').innerHTML = `
+            <div class="setup-guide-content">
+                <h4>Common Issues and Solutions</h4>
+                
+                <div class="troubleshoot-item">
+                    <h5>❌ "python: command not found" or "python3: command not found"</h5>
+                    <p><strong>Solution:</strong> Install Python from <a href="https://www.python.org/downloads/" target="_blank">python.org</a> and ensure it's added to your PATH.</p>
+                </div>
+
+                <div class="troubleshoot-item">
+                    <h5>❌ "git: command not found"</h5>
+                    <p><strong>Solution:</strong> Install Git from <a href="https://git-scm.com/downloads" target="_blank">git-scm.com</a></p>
+                </div>
+
+                <div class="troubleshoot-item">
+                    <h5>❌ Port 8000 already in use</h5>
+                    <p><strong>Solution:</strong> Use a different port: <code>python3 -m http.server 8080</code> then visit <a href="http://localhost:8080">localhost:8080</a></p>
+                </div>
+
+                <div class="troubleshoot-item">
+                    <h5>❌ Application not loading properly</h5>
+                    <p><strong>Solutions:</strong></p>
+                    <ul>
+                        <li>Check browser console for errors (F12 → Console)</li>
+                        <li>Try incognito/private mode to bypass cache</li>
+                        <li>Ensure all files downloaded properly</li>
+                        <li>Verify you're accessing via http://localhost:8000 not file://</li>
+                    </ul>
+                </div>
+
+                <div class="troubleshoot-item">
+                    <h5>❌ Permission denied errors</h5>
+                    <p><strong>Solution:</strong> On macOS/Linux, you may need to make the script executable: <code>chmod +x setup-macos.sh</code></p>
+                </div>
+            </div>
+        `;
+    }
+
+    showFAQ() {
+        this.showSetupContent('faq');
+        document.getElementById('setup-modal-title').textContent = '❓ FAQ';
+        document.getElementById('setup-modal-body').innerHTML = `
+            <div class="setup-guide-content">
+                <h4>Frequently Asked Questions</h4>
+                
+                <div class="faq-item">
+                    <h5>Q: Do I need an internet connection to use the application?</h5>
+                    <p>A: Only for the initial setup and downloading external resources. The main application runs locally.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h5>Q: Can I use this on a tablet or mobile device?</h5>
+                    <p>A: Yes! The interface is responsive and works on tablets and phones, though the experience is optimized for desktop.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h5>Q: Is my progress saved automatically?</h5>
+                    <p>A: Yes, all progress is automatically saved to your browser's local storage and persists between sessions.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h5>Q: Can I customize the curriculum content?</h5>
+                    <p>A: Yes! The curriculum is defined in JavaScript and can be modified to suit your learning needs.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h5>Q: What if I don't have VS Code?</h5>
+                    <p>A: VS Code is optional but recommended. You can use any text editor or IDE you prefer.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h5>Q: How do I update to newer versions?</h5>
+                    <p>A: Use <code>git pull</code> in the project directory to get the latest updates from GitHub.</p>
+                </div>
+            </div>
+        `;
     }
 }
 
